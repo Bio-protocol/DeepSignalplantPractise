@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Overview
 ![](./graphs/pipeline.png)
 
@@ -7,6 +6,7 @@
 Linux version 3.10.0-862.el7.x86_64 (Red Hat 4.8.5-28) with 48 CPU (2*Intel Gold 6140, 18 cores, 2.3 Ghz) and GPU (2*Nvidia V100, 640 cores, 32 GB).
 
 # Installation
+The following software shoud be installed according to the guidance in the related protocol.
 1.	[Guppy 4.0.0+](https://timkahlke.github.io/LongRead_tutorials/BS_G.html)
 2.	[DeepSignal-plant v0.1.5](https://github.com/PengNi/DeepSignal-plant)
 * The pipeline of DeepSignal-plant depends on the softwares listed as follow:  
@@ -24,75 +24,75 @@ h5ls tools we use to preview the FAST5 files would be installed automatically wi
 	* [hurry.filesize 0.9](https://pypi.org/project/hurry.filesize/)
 
 # Related scripts
-The related scripts are in the folder "DeepSignalplantPractise/lib". 
+If you clone this repository to your server, you will find a folder named "DeepSignalplantPractise" as an example of the workflow:
+```
+git clone https://github.com/LIZW2019/DeepSignalplantPractise.git
+```
+The related scripts are in the folder "DeepSignalplantPractise/lib".   
 
-The scripts from DeepSignal-plant are expected to be cloned under this folder. 
+The script "DeepSignalplantPractise/lib/python_scripts/met_level_bin.py" is used for bin methylation level calculation in **Step8**.   
+The script "DeepSignalplantPractise/lib/python_scripts/chrom_met_visulization.py" is for methylation level distribution plot in **Step9**. 
+
+The scripts from DeepSignal-plant are expected to be cloned in this folder:
 ```
 cd DeepSignalplantPractise/lib
 git clone https://github.com/PengNi/deepsignal-plant.git
 ```
 
-You will find the script "split_freq_file_by_5mC_motif.py" under the folder "DeepSignalplantPractise/lib/deepsignal-plant/scripts", which will be used in Step7.
-We also use $PATHofDeepSignalPlant to indicate the path for Deepsignal-plant download in the code. For example, In this case, $PATHofDeepSignalPlant = "DeepSignalplantPractise/lib/deepsignal-plant/scripts".
+You will find the script "split_freq_file_by_5mC_motif.py" under the folder "DeepSignalplantPractise/lib/deepsignal-plant/scripts", which will be used in **Step7**.
+We also use $PATHofDeepSignalPlant to indicate the path for Deepsignal-plant download in the commands. In this case, $PATHofDeepSignalPlant = "DeepSignalplantPractise/lib/deepsignal-plant/scripts".
 
-The script "lib/python_scripts/met_level_bin.py" is used for bin methylation level calculation in Step8.   
-The script "lib/python_scripts/chrom_met_visulization.py" is for methylation level distribution plot in Step9. 
+# Input Data  
+The input data should be downloaded into different subfolders under the "DeepSignalplantPractise/input". The data we provided can be access in the our shared Google Drive folder: https://drive.google.com/drive/folders/1XCL6Ovvv9fpjg8A9prgIu2T7Ta5Yjc28
 
-# Input Data
-
-If you clone this repository to your server, you will find a folder named "DeepSignalplantPractise" as an example of the workflow:
-```
-git clone https://github.com/LIZW2019/DeepSignalplantPractise.git
-```
-
-The input data should be downloaded into different subfolders under the "DeepSignalplantPractise/input"
-
-**1.Sequence data in FAST5 format**
-Data generated from Nanopore direct DNA sequencing in FAST5 format.
-Sample data can be download from the google device:   
-https://drive.google.com/drive/folders/1XCL6Ovvv9fpjg8A9prgIu2T7Ta5Yjc28?usp=sharing
-
-The user can download the file "sample_data.tar.gz" to a local computer and transfer it to the folder "DeepSignalplantPractise/input/Step1_Input". The command below is used to decompress the file:
+**a.Sequence data in FAST5 format**  
+Data generated from Nanopore direct DNA sequencing is in FAST5 format.  
+Sample data for Step1 can be download from the ["Step1_Input" folder in Google Drive](https://drive.google.com/drive/folders/1NZe6mQ5y1S8eaE-GwU124PvmONBoz5X7?usp=sharing).The user can download the file "sample_data.tar.gz" to a local computer and transfer it to the folder "DeepSignalplantPractise/input/Step1_Input". The command below is used to decompress the file:  
 
 ```
 tar -zxvf sample_data.tar.gz 
 ```
 
-In the “sample_data” folder, users will find four files ending in .fast5. These example files are in FAST5 format and generated from Nanopore sequencing, containing the raw electric signal that we can call the base sequence and modification. Users can refer to https://hasindu2008.github.io/slow5specs/fast5_demystified.pdf for a detailed introduction of the FAST5 format.
+In the decompressed “sample_data” folder, users will find four files ending in .fast5. These example files are in FAST5 format and generated from Nanopore sequencing, containing the raw electric signal that we can call the base sequence and modification. Users can refer to https://hasindu2008.github.io/slow5specs/fast5_demystified.pdf for a detailed introduction of the FAST5 format.
 
-In the google drive path, the three files under the folder "Pore-C_Rep2_example" are prepared as example input for Step8. They should be downloaded and transfer to the folder "DeepSignalplantPractise/input/Step8_Input"
+**d.Preprocessed data**  
+In this case study, some steps would need preprocessed data as input.  
 
-**2.Reference genome**
-Reference genome in fasta format for mapping in Step4. Genome gff file should be downloaded and the chromosome coordinates are extracted for Step8 input.
+In **Step3**, if you fail to get access to Guppy, you can use our basecalled fastq for the downstream analysis. Download it from the ["Step3_Input" folder in Google Drive](https://drive.google.com/drive/folders/1pk4vecjdC48gslbeXGNKforUb0jxRPpz?usp=sharing) and move it to the "DeepSignalplantPractise/input/Step3_Input".  
+
+In **Step8**, because the sample data is too small for bin calculation and visualization, we provide the preprocessed data from Pore-C as the input. Download it from the ["Step8_Input" folder in Google Drive](https://drive.google.com/drive/folders/14xw6gvQz_gjUi6p86NrSHZq59YABlzZO?usp=sharing) and move it to the "DeepSignalplantPractise/input/Step8_Input".  
+
+**b.Reference genome**  
+Download the reference genome in fasta format for mapping in Step4. Download the Genome gff file and extract the chromosome coordinates for Step8 input.
 ```
-cd ./DeepSignalplantPractise/input/reference
+#download reference genome
+cd ./DeepSignalplantPractise/input/
 mkdir reference
 cd reference
 wget -c http://ftp.ensemblgenomes.org/pub/plants/release-53/fasta/arabidopsis_thaliana/dna/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa.gz 
 gunzip Arabidopsis_thaliana.TAIR10.dna.toplevel.fa.gz
+
+#download gff file
+cd ./DeepSignalplantPractise/input/reference
 wget -c http://ftp.ensemblgenomes.org/pub/plants/release-53/gff3/arabidopsis_thaliana/Arabidopsis_thaliana.TAIR10.53.gff3.gz 
 gunzip Arabidopsis_thaliana.TAIR10.53.gff3.gz
 #extract the chromosomes coordinates
 awk -F "\t" '{if($3=="chromosome") print($1"\t"$4-1"\t"$5)}' Arabidopsis_thaliana.TAIR10.53.gff3 > Tair10_genome.bed
 ```
 
-**3.Pretrain model**  
-Download the model provided by DeepSignal-plant on its GitHub page (https://github.com/PengNi/DeepSignal-plant ) and move it to the folder "DeepSignalplantPractise/input/model" for 5mC calling in Step5.
+**c.Pretrained model**  
+Download [the model provided by DeepSignal-plant](https://drive.google.com/file/d/1HnDKPEfCAXgo7vPN-zaD44Kqz1SDw160/view?usp=sharing) and move it to the folder "DeepSignalplantPractise/input/model" for 5mC calling in Step5.
 
-**4.Preprocessed data for bin calculation**
-Download the data provided in 
-
-# Major steps 
-
+# Major steps  
 In this protocol, we use $PATHofDeepSignalPlant to indicate the path for Deepsignal-plant download and $CondaEnv to indicate the path of the Conda environment. Users will need to replace these two variables manually with the path they use.
 
-**Step1. Convert the multi-read FAST5 into single-read form**
+**Step1. Convert the multi-read FAST5 into single-read form**  
 ```
 #01.multi_to_single_fast5.sh
 multi_to_single_fast5 -i ../input/Step1_Input/sample_data -s ../cache/SINGLE_sample_data/ -t 30 --recursive
 ```
 
-**Step2. Basecall FAST5 files with Guppy**
+**Step2. Basecall FAST5 files with Guppy**  
 
 ```
 #02.basecall.sh
@@ -106,12 +106,12 @@ guppy_basecaller \
 --device "cuda:all:100%"
 ```
 
-**Step3. Add the basecalled sequence back to FAST5 with Tombo preprocess**
+**Step3. Add the basecalled sequence back to FAST5 with Tombo preprocess**  
 
 ```
 #03.tombo_preprocess.sh
 #environment setting, replace $CondaEnv/deepsignalpenv with your actual path
-export PATH=/public/home/lizw/anaconda3/envs/deepsignalpenv/bin:$PATH
+export PATH=$CondaEnv/deepsignalpenv/bin:$PATH
 # Tombo preprocess
 cat ../cache/SINGLE_sample_data/fastq/pass/*fastq > ../cache/SINGLE_sample_data/fastq/pass.fastq
 tombo preprocess annotate_raw_with_fastqs \
@@ -121,12 +121,12 @@ tombo preprocess annotate_raw_with_fastqs \
 --overwrite \
 --processes 30
 ```
-**Step4. Map the raw signal to reference genome with Tombo resquiggle**
+**Step4. Map the raw signal to reference genome with Tombo resquiggle**  
 
 ```
 #04.tombo_resquiggle.sh
 #environment setting, replace $CondaEnv/deepsignalpenv with your actual path
-export PATH=/public/home/lizw/anaconda3/envs/deepsignalpenv/bin:$PATH
+export PATH=$CondaEnv/deepsignalpenv/bin:$PATH
 # resquiggler
 tombo resquiggle \
 ../cache/SINGLE_sample_data/ \
@@ -138,11 +138,11 @@ tombo resquiggle \
 --ignore-read-locks
 ```
 
-**Step5. Call methylation of reads with DeepSignal-plant call_mods**
+**Step5. Call methylation of reads with DeepSignal-plant call_mods**  
 ```
 #05.deepplant-met-mod.sh
 #environment setting, replace $CondaEnv/deepsignalpenv with your actual path
-export PATH=/public/home/lizw/anaconda3/envs/deepsignalpenv/bin:$PATH
+export PATH=$CondaEnv/deepsignalpenv/bin:$PATH
 #call 5mC
 CUDA_VISIBLE_DEVICES=0,1 deepsignal_plant call_mods \
 --input_path ../cache/SINGLE_sample_data \
@@ -153,11 +153,11 @@ CUDA_VISIBLE_DEVICES=0,1 deepsignal_plant call_mods \
 --motifs C --nproc 30 --nproc_gpu 2
 ```
 
-**Step6. Calculate methylation frequency with DeepSignal-plant call_freq**
+**Step6. Calculate methylation frequency with DeepSignal-plant call_freq**  
 ```
 #06.deepplant-met-freq.sh
 #environment setting, replace $CondaEnv/deepsignalpenv with your actual path
-export PATH=/public/home/lizw/anaconda3/envs/deepsignalpenv/bin:$PATH
+export PATH=$CondaEnv/deepsignalpenv/bin:$PATH
 #calculate frequency
 deepsignal_plant call_freq \
 --input_path ../cache/SINGLE_sample_data/fast5s.C.call_mods.tsv \
@@ -165,15 +165,16 @@ deepsignal_plant call_freq \
 --sort --bed
 ```
 
-**Step7. Split the result into CG, CHG, and CHH context**
+**Step7. Split the result into CG, CHG, and CHH context**  
 ```
 #07.split_context.sh
-python ../lib/DeepsingalPlant_scripts/deepsignal-plant/scripts/split_freq_file_by_5mC_motif.py \
+#replace $PATHofDeepSignalPlant with your actual path
+python $PATHofDeepSignalPlant/scripts/split_freq_file_by_5mC_motif.py \
 --freqfile ../cache/SINGLE_sample_data/fast5s.C.call_mods.freq.bed \
 --ref ../input/reference/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa
 ```
 
-**Step8. Calculate the weighted methylation level in the bin**
+**Step8. Calculate the weighted methylation level in the bin**  
 
 ```
 #08.met_level_bin.sh
@@ -185,7 +186,7 @@ python ../lib/python_scripts/met_level_bin.py \
 --outdir ../output
 ```
 
-**Step9. Visualize the methylation level by IGV and python plotting**
+**Step9. Visualize the methylation level by IGV and python plotting**  
 
 ```
 #09.chrom_met_visulization.sh
@@ -197,105 +198,11 @@ python ../lib/python_scripts/chrom_met_visulization.py \
 --chrom 4 --outdir ../output
 ```
 
-# Expected results
-**The intermediate results and the final results of this workflow is large, so we keep only part of the files as examples under the folder "cache" and "output" respectively, with the name marked with "EXAMPLE".**
-
+# Expected results  
+**The intermediate results and the final results of this workflow is large, so we keep only part of the files as examples under the folder "cache" and "output" respectively, with the name marked with "EXAMPLE".** The results can be visualized as follow:
 
 * IGV 
 ![](./graphs/IGV.png)
 
-* python plot
+* Python plot
 ![](./graphs/Chr4_methylation_distribution.png)
-=======
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
-
-# Data, Code and Workflows Guideline
-
-To guide eBook authors having a better sense of the workflow layout, here we briefly introduce the specific purposes of the dir system. 
-
-
-1. __cache__: Here, it stores intermediate datasets or results that are generated during the preprocessing steps.
-2. __graphs__: The graphs/figures produced during the analysis.
-3. __input__: Here, we store the raw input data. Data size > 100M is not allowed. We recommend using small sample data for the illustration purpose of the workflow. If you have files > 100M, please contact the chapter editor to find a solution. 
-4. __lib__: The source code, functions, or algorithms used within the workflow.
-5. __output__: The final output results of the workflow.
-6. __workflow__: Step by step pipeline. It may contain some sub-directories. 
-    - It is suggested to use __a numbering system__ and __keywords__ to indicate the order and the main purpose of the scripts, i.e., `1_fastq_quality_checking.py`, `2_cleaned_reads_alignment.py`.
-    - To ensure reproducibility, please use the __relative path__ within the `workflow`.
-7. __README__: In the readme file, please briefly describe the purpose of the repository, the installation, and the input data format. 
-    - We recommend using a diagram to describe the workflow briefly.
-    - Provide the installation details.
-    - Show a small proportion of the input data unless the data file is in a well-known standard format, i.e., the `head` or `tail` of the input data.
-
-## Overview of an example workflow: Fastq data quality checking
-
-This is an example workflow to check the quality of the paired-end fastq files using `FastQC` software.
-
-![](graphs/diagram.png)
-
-## Installation
-
-- __Running environment__: 
-    - The workflow was constructed based on the __Linux system__ running the Oracle v1.6 to 1.8 java runtime environment (JREs).
-
-- __Required software and versions__: 
-    - [FastQC v0.11.9](http://www.bioinformatics.babraham.ac.uk/projects/download.html#fastqc)
-    - [multiqc](https://github.com/ewels/MultiQC)
-    - [R 3.6.3](https://cran.r-project.org/) for results ploting
-        - [RStudio 1.4](https://rstudio.com/), [ggplot2 3.3.3](https://cran.r-project.org/web/packages/ggplot2/index.html), [tidyr 1.1.2](https://github.com/tidyverse/tidyr)
-
-
-## Input Data
-
-The example data used here is the paired-end fastq file generated by using Illumina platform.  
-
-- R1 FASTQ file: `input/reads1.fastq`  
-- R2 FASTQ file: `input/reads2.fastq`  
-
-Each entry in a FASTQ files consists of 4 lines:  
-
-1. A sequence identifier with information about the sequencing run and the cluster. The exact contents of this line vary by based on the BCL to FASTQ conversion software used.  
-2. The sequence (the base calls; A, C, T, G and N).  
-3. A separator, which is simply a plus (+) sign.  
-4. The base call quality scores. These are Phred +33 encoded, using ASCII characters to represent the numerical quality scores.  
-
-The first entry of the input data:
-```
-@HWI-ST361_127_1000138:2:1101:1195:2141/1
-CGTTNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNGGAGGGGTTNNNNNNNNNNNNNNN
-+
-[[[_BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-```
-
-
-## Major steps
-
-#### Step 1: running the FastQC to conduct quality checking
-- Note that you have to normalize the path in the shell script.
-
-```
-sh workflow/1_run_fastqc.sh
-```
-
-#### Step 2: aggregate results from FastQC
-
-```
-sh workflow/2_aggregate_results.sh
-```
-
-#### Step 3: view the results
-
-- Results can be visualized by clicking `output/multiqc_report.html`.
-- Alternatively, you can plot the results yourself using the below R code.
-
-```
-3_visualize_results.Rmd
-```
-
-## Expected results
-
-![](graphs/figure1.png)
-
-## License
-It is a free and open source software, licensed under []() (choose a license from the suggested list:  [GPLv3](https://github.com/github/choosealicense.com/blob/gh-pages/_licenses/gpl-3.0.txt), [MIT](https://github.com/github/choosealicense.com/blob/gh-pages/LICENSE.md), or [CC BY 4.0](https://github.com/github/choosealicense.com/blob/gh-pages/_licenses/cc-by-4.0.txt)).
->>>>>>> 4c8ae9079344a5881ccf3ccb948c12649ea08835
