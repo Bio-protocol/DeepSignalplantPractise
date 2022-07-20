@@ -50,19 +50,24 @@ Data generated from Nanopore direct DNA sequencing is in FAST5 format.
 Sample data for Step1 can be download from the ["Step1_Input" folder in Google Drive](https://drive.google.com/drive/folders/1NZe6mQ5y1S8eaE-GwU124PvmONBoz5X7?usp=sharing).The user can download the file "sample_data.tar.gz" to a local computer and transfer it to the folder "DeepSignalplantPractise/input/Step1_Input". The command below is used to decompress the file:  
 
 ```
+cd DeepSignalplantPractise/input/Step1_Input
 tar -zxvf sample_data.tar.gz 
 ```
 
 In the decompressed “sample_data” folder, users will find four files ending in .fast5. These example files are in FAST5 format and generated from Nanopore sequencing, containing the raw electric signal that we can call the base sequence and modification. Users can refer to https://hasindu2008.github.io/slow5specs/fast5_demystified.pdf for a detailed introduction of the FAST5 format.
 
-**d.Preprocessed data**  
+**b.Preprocessed data**  
 In this case study, some steps would need preprocessed data as input.  
 
-In **Step3**, if you fail to get access to Guppy, you can use our basecalled fastq for the downstream analysis. Download it from the ["Step3_Input" folder in Google Drive](https://drive.google.com/drive/folders/1pk4vecjdC48gslbeXGNKforUb0jxRPpz?usp=sharing) and move it to the "DeepSignalplantPractise/input/Step3_Input".  
+In **Step3**, if you fail to get access to Guppy, you can use our basecalled fastq for the downstream analysis. Download it from the ["Step3_Input" folder in Google Drive](https://drive.google.com/drive/folders/1pk4vecjdC48gslbeXGNKforUb0jxRPpz?usp=sharing) ,move it to the "DeepSignalplantPractise/input/Step3_Input" and decompress for analysis:
+```
+cd DeepSignalplantPractise/input/Step3_Input
+tar -zxvf fastq.tar.gz
+```
 
 In **Step8**, because the sample data is too small for bin calculation and visualization, we provide the preprocessed data from Pore-C as the input. Download it from the ["Step8_Input" folder in Google Drive](https://drive.google.com/drive/folders/14xw6gvQz_gjUi6p86NrSHZq59YABlzZO?usp=sharing) and move it to the "DeepSignalplantPractise/input/Step8_Input".  
 
-**b.Reference genome**  
+**c.Reference genome**  
 Download the reference genome in fasta format for mapping in Step4. Download the Genome gff file and extract the chromosome coordinates for Step8 input.
 ```
 #download reference genome
@@ -80,11 +85,11 @@ gunzip Arabidopsis_thaliana.TAIR10.53.gff3.gz
 awk -F "\t" '{if($3=="chromosome") print($1"\t"$4-1"\t"$5)}' Arabidopsis_thaliana.TAIR10.53.gff3 > Tair10_genome.bed
 ```
 
-**c.Pretrained model**  
+**d.Pretrained model**  
 Download [the model provided by DeepSignal-plant](https://drive.google.com/file/d/1HnDKPEfCAXgo7vPN-zaD44Kqz1SDw160/view?usp=sharing) and move it to the folder "DeepSignalplantPractise/input/model" for 5mC calling in Step5.
 
 # Major steps  
-In this protocol, we use $PATHofDeepSignalPlant to indicate the path for Deepsignal-plant download and $CondaEnv to indicate the path of the Conda environment. Users will need to replace these two variables manually with the path they use.
+In this protocol, we use $PATHofDeepSignalPlant to indicate the path for Deepsignal-plant download and $CondaEnv to indicate the path of the Conda environment. Users will need to replace these two variables manually with the path they use. All the commands below are expected to be operated under the "DeepSignalplantPractise/workflow" folder. 
 
 **Step1. Convert the multi-read FAST5 into single-read form**  
 ```
@@ -106,7 +111,12 @@ guppy_basecaller \
 --device "cuda:all:100%"
 ```
 
-**Step3. Add the basecalled sequence back to FAST5 with Tombo preprocess**  
+**Step3. Add the basecalled sequence back to FAST5 with Tombo preprocess**
+
+**Optional**: if you can't use the Guppy in Step2, you can use the fastq in "DeepSignalplantPractise/input/Step3_input" as input for this step. Copy it to the path "../cache/SINGLE_sample_data" and then run the preprocess.
+```
+cp -r ../input/Step3_Input/fastq ../cache/SINGLE_sample_data/
+```
 
 ```
 #03.tombo_preprocess.sh
@@ -180,7 +190,7 @@ python $PATHofDeepSignalPlant/scripts/split_freq_file_by_5mC_motif.py \
 #08.met_level_bin.sh
 python ../lib/python_scripts/met_level_bin.py \
 --region_bed ../input/reference/Tair10_genome.bed \
---met_bed ../input/Step8_Input/porec_rep2/forstep08/Rep2_fast5s.C.call_mods.CG.frequency.bed \
+--met_bed ../input/Step8_Input/Rep2_fast5s.C.call_mods.CG.frequency.bed \
 --prefix Rep2_fast5s.C.call_mods.CG \
 --binsize 100000 \
 --outdir ../output
@@ -199,7 +209,7 @@ python ../lib/python_scripts/chrom_met_visulization.py \
 ```
 
 # Expected results  
-**The intermediate results and the final results of this workflow is large, so we keep only part of the files as examples under the folder "cache" and "output" respectively, with the name marked with "EXAMPLE".** The results can be visualized as follow:
+The intermediate results and the final results of this workflow is large, so we **keep only part of the files as examples** under the folder "cache" and "output" respectively, with the name marked with **"EXAMPLE".** The results can be visualized as follow:
 
 * IGV 
 ![](./graphs/IGV.png)
