@@ -113,9 +113,11 @@ guppy_basecaller \
 
 **Step3. Add the basecalled sequence back to FAST5 with Tombo preprocess**
 
-**Optional**: if you can use the Guppy in Step2, you can use the fastq in "DeepSignalplantPractise/input/Step3_input" as input for this step. Copy it to the path "../cache/SINGLE_sample_data":
+**Optional**: if you can't use the Guppy in Step2, you can use the fastq in "DeepSignalplantPractise/input/Step3_input" as input for this step. Copy it to the path "../cache/SINGLE_sample_data" and then run the preprocess.
 ```
 cp -r ../input/Step3_Input/fastq ../cache/SINGLE_sample_data/
+```
+
 ```
 #03.tombo_preprocess.sh
 #environment setting, replace $CondaEnv/deepsignalpenv with your actual path
