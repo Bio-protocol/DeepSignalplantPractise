@@ -55,14 +55,14 @@ tar -zxvf sample_data.tar.gz
 
 In the decompressed “sample_data” folder, users will find four files ending in .fast5. These example files are in FAST5 format and generated from Nanopore sequencing, containing the raw electric signal that we can call the base sequence and modification. Users can refer to https://hasindu2008.github.io/slow5specs/fast5_demystified.pdf for a detailed introduction of the FAST5 format.
 
-**d.Preprocessed data**  
+**b.Preprocessed data**  
 In this case study, some steps would need preprocessed data as input.  
 
 In **Step3**, if you fail to get access to Guppy, you can use our basecalled fastq for the downstream analysis. Download it from the ["Step3_Input" folder in Google Drive](https://drive.google.com/drive/folders/1pk4vecjdC48gslbeXGNKforUb0jxRPpz?usp=sharing) and move it to the "DeepSignalplantPractise/input/Step3_Input".  
 
 In **Step8**, because the sample data is too small for bin calculation and visualization, we provide the preprocessed data from Pore-C as the input. Download it from the ["Step8_Input" folder in Google Drive](https://drive.google.com/drive/folders/14xw6gvQz_gjUi6p86NrSHZq59YABlzZO?usp=sharing) and move it to the "DeepSignalplantPractise/input/Step8_Input".  
 
-**b.Reference genome**  
+**c.Reference genome**  
 Download the reference genome in fasta format for mapping in Step4. Download the Genome gff file and extract the chromosome coordinates for Step8 input.
 ```
 #download reference genome
@@ -80,7 +80,7 @@ gunzip Arabidopsis_thaliana.TAIR10.53.gff3.gz
 awk -F "\t" '{if($3=="chromosome") print($1"\t"$4-1"\t"$5)}' Arabidopsis_thaliana.TAIR10.53.gff3 > Tair10_genome.bed
 ```
 
-**c.Pretrained model**  
+**d.Pretrained model**  
 Download [the model provided by DeepSignal-plant](https://drive.google.com/file/d/1HnDKPEfCAXgo7vPN-zaD44Kqz1SDw160/view?usp=sharing) and move it to the folder "DeepSignalplantPractise/input/model" for 5mC calling in Step5.
 
 # Major steps  
