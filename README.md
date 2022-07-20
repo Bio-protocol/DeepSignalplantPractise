@@ -50,6 +50,7 @@ Data generated from Nanopore direct DNA sequencing is in FAST5 format.
 Sample data for Step1 can be download from the ["Step1_Input" folder in Google Drive](https://drive.google.com/drive/folders/1NZe6mQ5y1S8eaE-GwU124PvmONBoz5X7?usp=sharing).The user can download the file "sample_data.tar.gz" to a local computer and transfer it to the folder "DeepSignalplantPractise/input/Step1_Input". The command below is used to decompress the file:  
 
 ```
+cd DeepSignalplantPractise/input/Step1_Input
 tar -zxvf sample_data.tar.gz 
 ```
 
@@ -58,7 +59,11 @@ In the decompressed “sample_data” folder, users will find four files ending 
 **b.Preprocessed data**  
 In this case study, some steps would need preprocessed data as input.  
 
-In **Step3**, if you fail to get access to Guppy, you can use our basecalled fastq for the downstream analysis. Download it from the ["Step3_Input" folder in Google Drive](https://drive.google.com/drive/folders/1pk4vecjdC48gslbeXGNKforUb0jxRPpz?usp=sharing) and move it to the "DeepSignalplantPractise/input/Step3_Input".  
+In **Step3**, if you fail to get access to Guppy, you can use our basecalled fastq for the downstream analysis. Download it from the ["Step3_Input" folder in Google Drive](https://drive.google.com/drive/folders/1pk4vecjdC48gslbeXGNKforUb0jxRPpz?usp=sharing) ,move it to the "DeepSignalplantPractise/input/Step3_Input" and decompress for analysis:
+```
+cd DeepSignalplantPractise/input/Step3_Input
+tar -zxvf fastq.tar.gz
+```
 
 In **Step8**, because the sample data is too small for bin calculation and visualization, we provide the preprocessed data from Pore-C as the input. Download it from the ["Step8_Input" folder in Google Drive](https://drive.google.com/drive/folders/14xw6gvQz_gjUi6p86NrSHZq59YABlzZO?usp=sharing) and move it to the "DeepSignalplantPractise/input/Step8_Input".  
 
