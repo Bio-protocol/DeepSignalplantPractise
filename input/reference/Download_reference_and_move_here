@@ -1,0 +1,13 @@
+#download reference genome
+cd ./DeepSignalplantPractise/input/
+mkdir reference
+cd reference
+wget -c http://ftp.ensemblgenomes.org/pub/plants/release-53/fasta/arabidopsis_thaliana/dna/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa.gz 
+gunzip Arabidopsis_thaliana.TAIR10.dna.toplevel.fa.gz
+
+#download gff file
+cd ./DeepSignalplantPractise/input/reference
+wget -c http://ftp.ensemblgenomes.org/pub/plants/release-53/gff3/arabidopsis_thaliana/Arabidopsis_thaliana.TAIR10.53.gff3.gz 
+gunzip Arabidopsis_thaliana.TAIR10.53.gff3.gz
+#extract the chromosomes coordinates
+awk -F "\t" '{if($3=="chromosome") print($1"\t"$4-1"\t"$5)}' Arabidopsis_thaliana.TAIR10.53.gff3 > Tair10_genome.bed
