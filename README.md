@@ -89,7 +89,7 @@ awk -F "\t" '{if($3=="chromosome") print($1"\t"$4-1"\t"$5)}' Arabidopsis_thalian
 Download [the model provided by DeepSignal-plant](https://drive.google.com/file/d/1HnDKPEfCAXgo7vPN-zaD44Kqz1SDw160/view?usp=sharing) and move it to the folder "DeepSignalplantPractise/input/model" for 5mC calling in Step5.
 
 # Major steps  
-In this protocol, we use $PATHofDeepSignalPlant to indicate the path for Deepsignal-plant download and $CondaEnv to indicate the path of the Conda environment. Users will need to replace these two variables manually with the path they use.
+In this protocol, we use $PATHofDeepSignalPlant to indicate the path for Deepsignal-plant download and $CondaEnv to indicate the path of the Conda environment. Users will need to replace these two variables manually with the path they use. All the commands below are expected to be operated under the "DeepSignalplantPractise/workflow" folder. 
 
 **Step1. Convert the multi-read FAST5 into single-read form**  
 ```
@@ -111,8 +111,11 @@ guppy_basecaller \
 --device "cuda:all:100%"
 ```
 
-**Step3. Add the basecalled sequence back to FAST5 with Tombo preprocess**  
+**Step3. Add the basecalled sequence back to FAST5 with Tombo preprocess**
 
+**Optional**: if you can use the Guppy in Step2, you can use the fastq in "DeepSignalplantPractise/input/Step3_input" as input for this step. Copy it to the path "../cache/SINGLE_sample_data":
+```
+cp -r ../input/Step3_Input/fastq ../cache/SINGLE_sample_data/
 ```
 #03.tombo_preprocess.sh
 #environment setting, replace $CondaEnv/deepsignalpenv with your actual path
@@ -185,7 +188,7 @@ python $PATHofDeepSignalPlant/scripts/split_freq_file_by_5mC_motif.py \
 #08.met_level_bin.sh
 python ../lib/python_scripts/met_level_bin.py \
 --region_bed ../input/reference/Tair10_genome.bed \
---met_bed ../input/Step8_Input/porec_rep2/forstep08/Rep2_fast5s.C.call_mods.CG.frequency.bed \
+--met_bed ../input/Step8_Input/Rep2_fast5s.C.call_mods.CG.frequency.bed \
 --prefix Rep2_fast5s.C.call_mods.CG \
 --binsize 100000 \
 --outdir ../output
