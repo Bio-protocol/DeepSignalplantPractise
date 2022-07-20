@@ -46,7 +46,7 @@ git clone https://github.com/LIZW2019/DeepSignalplantPractise.git
 
 The input data should be downloaded into different subfolders under the "DeepSignalplantPractise/input"
 
-**1.Sequence data in FAST5 format**
+**1.Sequence data in FAST5 format**  
 Data generated from Nanopore direct DNA sequencing in FAST5 format.
 Sample data can be download from the google device:   
 https://drive.google.com/drive/folders/1XCL6Ovvv9fpjg8A9prgIu2T7Ta5Yjc28?usp=sharing
@@ -61,7 +61,7 @@ In the “sample_data” folder, users will find four files ending in .fast5. Th
 
 In the google drive path, the three files under the folder "Pore-C_Rep2_example" are prepared as example input for Step8. They should be downloaded and transfer to the folder "DeepSignalplantPractise/input/Step8_Input"
 
-**2.Reference genome**
+**2.Reference genome**  
 Reference genome in fasta format for mapping in Step4. Genome gff file should be downloaded and the chromosome coordinates are extracted for Step8 input.
 ```
 cd ./DeepSignalplantPractise/input/reference
