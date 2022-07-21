@@ -54,7 +54,7 @@ awk -F "\t" '{if($3=="chromosome") print($1"\t"$4-1"\t"$5)}' Arabidopsis_thalian
 ```
 
 **c.Pretrained model**  
-Download [the model provided by DeepSignal-plant](https://drive.google.com/file/d/1HnDKPEfCAXgo7vPN-zaD44Kqz1SDw160/view?usp=sharing) and move it to the folder "DeepSignalplantPractise/input/model" for 5mC calling in Step5.
+The users can download [the model provided by DeepSignal-plant](https://drive.google.com/file/d/1HnDKPEfCAXgo7vPN-zaD44Kqz1SDw160/view?usp=sharing) and move it to the folder "DeepSignalplantPractise/input/model" for 5mC calling in Step5.
 
 
 **(Optional) Preprocessed data**  
