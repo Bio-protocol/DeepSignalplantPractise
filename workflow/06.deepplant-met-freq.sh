@@ -3,6 +3,6 @@
 export PATH=$CondaEnv/deepsignalpenv/bin:$PATH
 #calculate frequency
 deepsignal_plant call_freq \
---input_path ../cache/SINGLE_sample_data/fast5s.C.call_mods.tsv \
---result_file ../cache/SINGLE_sample_data/fast5s.C.call_mods.freq.bed \
+--input_path ../cache/fast5s.C.call_mods.tsv \
+--result_file ../cache/fast5s.C.call_mods.freq.bed \
 --sort --bed
