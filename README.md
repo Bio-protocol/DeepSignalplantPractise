@@ -26,7 +26,7 @@ h5ls tools we use to preview the FAST5 files would be installed automatically wi
 # Related scripts
 The pipeline we used in this protocol can be downloaded on the GitHub page: (https://github.com/Bio-protocol/DeepSignalplantPractise) with the command: 
 ```
-git clone https://github.com/LIZW2019/DeepSignalplantPractise.git
+git clone https://github.com/Bio-protocol/DeepSignalplantPractise 
 ```
 The related scripts are in the folder "DeepSignalplantPractise/lib".   
 
