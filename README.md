@@ -24,7 +24,7 @@ h5ls tools we use to preview the FAST5 files would be installed automatically wi
 	* [hurry.filesize 0.9](https://pypi.org/project/hurry.filesize/)
 
 # Related scripts
-If you clone this repository to your server, you will find a folder named "DeepSignalplantPractise" as an example of the workflow:
+The pipeline we used in this protocol can be downloaded on the GitHub page: (https://github.com/Bio-protocol/DeepSignalplantPractise) with the command: 
 ```
 git clone https://github.com/LIZW2019/DeepSignalplantPractise.git
 ```
