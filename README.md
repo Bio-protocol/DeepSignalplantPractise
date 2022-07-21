@@ -62,7 +62,7 @@ In this protocol, we use $PATHofDeepSignalPlant to indicate the path for Deepsig
 **Step1. Convert the multi-read FAST5 into single-read form**  
 ```
 #01.multi_to_single_fast5.sh
-multi_to_single_fast5 -i ../input/Step1_Input/sample_data -s ../cache/SINGLE_sample_data/ -t 30 --recursive
+multi_to_single_fast5 -i ../input/Step1_Input/sample_data -s ../cache/ -t 30 --recursive
 ```
 
 **Step2. Basecall FAST5 files with Guppy**  
@@ -70,8 +70,8 @@ multi_to_single_fast5 -i ../input/Step1_Input/sample_data -s ../cache/SINGLE_sam
 ```
 #02.basecall.sh
 guppy_basecaller \
--i ../cache/SINGLE_sample_data/ \
--s ../cache/SINGLE_sample_data/fastq \
+-i ../cache/ \
+-s ../cache/fastq \
 -c dna_r9.4.1_450bps_hac_prom.cfg \
 --recursive \
 --disable_pings \
@@ -87,11 +87,11 @@ If the users can not access Guppy, they can download the basecalled fastq we pre
 #environment setting, replace $CondaEnv/deepsignalpenv with your actual path
 export PATH=$CondaEnv/deepsignalpenv/bin:$PATH
 # Tombo preprocess
-cat ../cache/SINGLE_sample_data/fastq/pass/*fastq > ../cache/SINGLE_sample_data/fastq/pass.fastq
+cat ../cache/fastq/pass/*fastq > ../cache/fastq/pass.fastq
 tombo preprocess annotate_raw_with_fastqs \
---fast5-basedir ../cache/SINGLE_sample_data/ \
---fastq-filenames ../cache/SINGLE_sample_data/fastq/pass.fastq \
---sequencing-summary-filenames ../cache/SINGLE_sample_data/fastq/sequencing_summary.txt \
+--fast5-basedir ../cache/ \
+--fastq-filenames ../cache/fastq/pass.fastq \
+--sequencing-summary-filenames ../cache/fastq/sequencing_summary.txt \
 --overwrite \
 --processes 30
 ```
@@ -103,7 +103,7 @@ tombo preprocess annotate_raw_with_fastqs \
 export PATH=$CondaEnv/deepsignalpenv/bin:$PATH
 # resquiggler
 tombo resquiggle \
-../cache/SINGLE_sample_data/ \
+../cache/ \
 ../input/reference/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa \
 --processes 30 \
 --corrected-group RawGenomeCorrected_000 \
@@ -119,9 +119,9 @@ tombo resquiggle \
 export PATH=$CondaEnv/deepsignalpenv/bin:$PATH
 #call 5mC
 CUDA_VISIBLE_DEVICES=0,1 deepsignal_plant call_mods \
---input_path ../cache/SINGLE_sample_data \
+--input_path ../cache \
 --model_path ../input/model/model.dp2.CNN.arabnrice2-1_120m_R9.4plus_tem.bn13_sn16.both_bilstm.epoch6.ckpt \
---result_file ../cache/SINGLE_sample_data/fast5s.C.call_mods.tsv \
+--result_file ../cache/fast5s.C.call_mods.tsv \
 --corrected_group RawGenomeCorrected_000 \
 --reference_path ../input/reference/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa \
 --motifs C --nproc 30 --nproc_gpu 2
@@ -134,8 +134,8 @@ CUDA_VISIBLE_DEVICES=0,1 deepsignal_plant call_mods \
 export PATH=$CondaEnv/deepsignalpenv/bin:$PATH
 #calculate frequency
 deepsignal_plant call_freq \
---input_path ../cache/SINGLE_sample_data/fast5s.C.call_mods.tsv \
---result_file ../cache/SINGLE_sample_data/fast5s.C.call_mods.freq.bed \
+--input_path ../cache/fast5s.C.call_mods.tsv \
+--result_file ../cache/fast5s.C.call_mods.freq.bed \
 --sort --bed
 ```
 
@@ -144,7 +144,7 @@ deepsignal_plant call_freq \
 #07.split_context.sh
 #replace $PATHofDeepSignalPlant with your actual path
 python $PATHofDeepSignalPlant/scripts/split_freq_file_by_5mC_motif.py \
---freqfile ../cache/SINGLE_sample_data/fast5s.C.call_mods.freq.bed \
+--freqfile ../cache/fast5s.C.call_mods.freq.bed \
 --ref ../input/reference/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa
 ```
 
@@ -154,7 +154,7 @@ Because the sample data is too small for bin calculation and visualization, we p
 
 ```
 #08.met_level_bin.sh
-python ../lib/python_scripts/met_level_bin.py \
+python ../lib/met_level_bin.py \
 --region_bed ../input/reference/Tair10_genome.bed \
 --met_bed ../input/Step8_Input/Rep2_fast5s.C.call_mods.CG.frequency.bed \
 --prefix Rep2_fast5s.C.call_mods.CG \
@@ -166,7 +166,7 @@ python ../lib/python_scripts/met_level_bin.py \
 
 ```
 #09.chrom_met_visulization.sh
-python ../lib/python_scripts/chrom_met_visulization.py \
+python ../lib/chrom_met_visulization.py \
 --cg_bedg ../output/Rep2_fast5s.C.call_mods.CG_binsize100000.bedgraph \
 --chg_bedg ../output/Rep2_fast5s.C.call_mods.CHG_binsize100000.bedgraph \
 --chh_bedg ../output/Rep2_fast5s.C.call_mods.CHH_binsize100000.bedgraph \
