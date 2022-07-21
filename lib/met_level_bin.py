@@ -43,7 +43,7 @@ def level_size(region_bed,met_bed,prefix,binsize,outdir):
     met_df_interval_group = met_df_interval.groupby(
         by=['chrom','interval']).apply(
         lambda df: df.assign(
-            met_level = ((df['coverage']*df['met_percentage']/100).sum())/df['coverage'].sum(),size = len(df)))
+            met_level = ((df['coverage']*df['met_percentage']/100).sum())/(df['coverage'].sum()) if (df['coverage'].sum() != 0) else 0,size = len(df)))
 
 
 
