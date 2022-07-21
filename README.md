@@ -32,14 +32,14 @@ The users can find the step-by-step commands in the folder “workflow” which 
 
 # Input Data  
 
-**a.Nanopore data**  
+**a. Nanopore data**  
 The Nanopore sequence sample data "sample_data.tar.gz" we used here was modified from the sample data provided by Deepsignal-plant13. The user can download it from ["Step1_Input" folder in Google Drive](https://drive.google.com/drive/folders/1NZe6mQ5y1S8eaE-GwU124PvmONBoz5X7?usp=sharing) to a local computer and transfer it to the folder "DeepSignalplantPractise/input/Step1_Input". The command below is used to decompress the file:
 
 ```
 tar -zxvf sample_data.tar.gz 
 ```
 
-**b.Reference genome and annotation**  
+**b. Reference genome and annotation**  
 ```
 #download reference genome
 cd ./DeepSignalplantPractise/input/reference
@@ -53,11 +53,11 @@ gunzip Arabidopsis_thaliana.TAIR10.53.gff3.gz
 awk -F "\t" '{if($3=="chromosome") print($1"\t"$4-1"\t"$5)}' Arabidopsis_thaliana.TAIR10.53.gff3 > Tair10_genome.bed
 ```
 
-**c.Pretrained model**  
+**c. Pretrained model**  
 The users can download [the model provided by DeepSignal-plant](https://drive.google.com/file/d/1HnDKPEfCAXgo7vPN-zaD44Kqz1SDw160/view?usp=sharing) and move it to the folder "DeepSignalplantPractise/input/model" for 5mC calling in Step5.
 
 
-**(Optional) Preprocessed data**  
+**d. (Optional) Preprocessed data**  
 In **Step3**, if you fail to get access to Guppy, you can use our basecalled fastq for the downstream analysis. Download it from the ["Step3_Input" folder in Google Drive](https://drive.google.com/drive/folders/1pk4vecjdC48gslbeXGNKforUb0jxRPpz?usp=sharing) ,move it to the "DeepSignalplantPractise/input/Step3_Input" and decompress for analysis:
 ```
 cd DeepSignalplantPractise/input/Step3_Input
