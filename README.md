@@ -31,17 +31,13 @@ git clone https://github.com/Bio-protocol/DeepSignalplantPractise
 The users can find the step-by-step commands in the folder “workflow” which are also listed in the boxes in this protocol. The examples for intermediate and the final output were stored in “cache” and “output” folders, respectively. The “lib” folder contains python scripts used within the workflow. The users can prepare the input data in the “input” folder as the following guidance.
 
 # Input Data  
-The input data should be downloaded into different subfolders under the "DeepSignalplantPractise/input". The data we provided can be access in the our shared Google Drive folder: https://drive.google.com/drive/folders/1XCL6Ovvv9fpjg8A9prgIu2T7Ta5Yjc28
 
 **a.Nanopore data preparation**  
-The Nanopore sequence sample data "sample_data.tar.gz" we used here was modified from the sample data provided by Deepsignal-plant13. The user can download it from [Step1_Input" folder in Google Drive](https://drive.google.com/drive/folders/1NZe6mQ5y1S8eaE-GwU124PvmONBoz5X7?usp=sharing) to a local computer and transfer it to the folder "DeepSignalplantPractise/input/Step1_Input". The command below is used to decompress the file:
+The Nanopore sequence sample data "sample_data.tar.gz" we used here was modified from the sample data provided by Deepsignal-plant13. The user can download it from ["Step1_Input" folder in Google Drive](https://drive.google.com/drive/folders/1NZe6mQ5y1S8eaE-GwU124PvmONBoz5X7?usp=sharing) to a local computer and transfer it to the folder "DeepSignalplantPractise/input/Step1_Input". The command below is used to decompress the file:
 
 ```
 tar -zxvf sample_data.tar.gz 
 ```
-
-In the decompressed “sample_data” folder, users will find four files ending in .fast5. These example files are in FAST5 format and generated from Nanopore sequencing, containing the raw electric signal that we can call the base sequence and modification. Users can refer to https://hasindu2008.github.io/slow5specs/fast5_demystified.pdf for a detailed introduction of the FAST5 format.
-
 
 **b.Reference genome**  
 Download the reference genome in fasta format for mapping in Step4. Download the Genome gff file and extract the chromosome coordinates for Step8 input.
