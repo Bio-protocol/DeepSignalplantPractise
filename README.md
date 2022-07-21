@@ -39,18 +39,14 @@ The Nanopore sequence sample data "sample_data.tar.gz" we used here was modified
 tar -zxvf sample_data.tar.gz 
 ```
 
-**b.Reference genome**  
-Download the reference genome in fasta format for mapping in Step4. Download the Genome gff file and extract the chromosome coordinates for Step8 input.
+**b.Reference genome and annotation**  
 ```
 #download reference genome
-cd ./DeepSignalplantPractise/input/
-mkdir reference
-cd reference
+cd ./DeepSignalplantPractise/input/reference
 wget -c http://ftp.ensemblgenomes.org/pub/plants/release-53/fasta/arabidopsis_thaliana/dna/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa.gz 
 gunzip Arabidopsis_thaliana.TAIR10.dna.toplevel.fa.gz
 
-#download gff file
-cd ./DeepSignalplantPractise/input/reference
+#download annotation
 wget -c http://ftp.ensemblgenomes.org/pub/plants/release-53/gff3/arabidopsis_thaliana/Arabidopsis_thaliana.TAIR10.53.gff3.gz 
 gunzip Arabidopsis_thaliana.TAIR10.53.gff3.gz
 #extract the chromosomes coordinates
