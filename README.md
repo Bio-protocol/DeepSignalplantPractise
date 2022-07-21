@@ -150,7 +150,7 @@ python $PATHofDeepSignalPlant/scripts/split_freq_file_by_5mC_motif.py \
 
 **Step8. Calculate the weighted methylation level in the bin**  
 
-In **Step8**, because the sample data is too small for bin calculation and visualization, we provide the preprocessed data from Pore-C as the input. Download it from the ["Step8_Input" folder in Google Drive](https://drive.google.com/drive/folders/14xw6gvQz_gjUi6p86NrSHZq59YABlzZO?usp=sharing) and move it to the "DeepSignalplantPractise/input/Step8_Input".  
+Because the sample data is too small for bin calculation and visualization, we provide the preprocessed data from Pore-C as the input. Download it from the ["Step8_Input" folder in Google Drive](https://drive.google.com/drive/folders/14xw6gvQz_gjUi6p86NrSHZq59YABlzZO?usp=sharing) and move it to the "DeepSignalplantPractise/input/Step8_Input".  
 
 ```
 #08.met_level_bin.sh
