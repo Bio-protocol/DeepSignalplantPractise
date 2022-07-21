@@ -56,15 +56,6 @@ awk -F "\t" '{if($3=="chromosome") print($1"\t"$4-1"\t"$5)}' Arabidopsis_thalian
 **c. Pretrained model**  
 The users can download [the model provided by DeepSignal-plant](https://drive.google.com/file/d/1HnDKPEfCAXgo7vPN-zaD44Kqz1SDw160/view?usp=sharing) and move it to the folder "DeepSignalplantPractise/input/model" for 5mC calling in Step5.
 
-
-**d. (Optional) Preprocessed data**  
-In **Step3**, if you fail to get access to Guppy, you can use our basecalled fastq for the downstream analysis. Download it from the ["Step3_Input" folder in Google Drive](https://drive.google.com/drive/folders/1pk4vecjdC48gslbeXGNKforUb0jxRPpz?usp=sharing) ,move it to the "DeepSignalplantPractise/input/Step3_Input" and decompress for analysis:
-```
-cd DeepSignalplantPractise/input/Step3_Input
-tar -zxvf fastq.tar.gz
-```
-In **Step8**, because the sample data is too small for bin calculation and visualization, we provide the preprocessed data from Pore-C as the input. Download it from the ["Step8_Input" folder in Google Drive](https://drive.google.com/drive/folders/14xw6gvQz_gjUi6p86NrSHZq59YABlzZO?usp=sharing) and move it to the "DeepSignalplantPractise/input/Step8_Input".  
-
 # Major steps  
 In this protocol, we use $PATHofDeepSignalPlant to indicate the path for Deepsignal-plant download and $CondaEnv to indicate the path of the Conda environment. Users will need to replace these two variables manually with the path they use. All the commands below are expected to be operated under the "DeepSignalplantPractise/workflow" folder. 
 
@@ -88,13 +79,9 @@ guppy_basecaller \
 --device "cuda:all:100%"
 ```
 
+If the users can not access Guppy, they can download the basecalled fastq we prepared in the ["Step3_Input" folder in Google Drive](https://drive.google.com/drive/folders/1pk4vecjdC48gslbeXGNKforUb0jxRPpz?usp=sharing) for the downstream analysis.
+
 **Step3. Add the basecalled sequence back to FAST5 with Tombo preprocess**
-
-**Optional**: if you can't use the Guppy in Step2, you can use the fastq in "DeepSignalplantPractise/input/Step3_input" as input for this step. Copy it to the path "../cache/SINGLE_sample_data" and then run the preprocess.
-```
-cp -r ../input/Step3_Input/fastq ../cache/SINGLE_sample_data/
-```
-
 ```
 #03.tombo_preprocess.sh
 #environment setting, replace $CondaEnv/deepsignalpenv with your actual path
@@ -162,6 +149,8 @@ python $PATHofDeepSignalPlant/scripts/split_freq_file_by_5mC_motif.py \
 ```
 
 **Step8. Calculate the weighted methylation level in the bin**  
+
+In **Step8**, because the sample data is too small for bin calculation and visualization, we provide the preprocessed data from Pore-C as the input. Download it from the ["Step8_Input" folder in Google Drive](https://drive.google.com/drive/folders/14xw6gvQz_gjUi6p86NrSHZq59YABlzZO?usp=sharing) and move it to the "DeepSignalplantPractise/input/Step8_Input".  
 
 ```
 #08.met_level_bin.sh
