@@ -28,19 +28,7 @@ The pipeline we used in this protocol can be downloaded on the GitHub page: (htt
 ```
 git clone https://github.com/Bio-protocol/DeepSignalplantPractise 
 ```
-The related scripts are in the folder "DeepSignalplantPractise/lib".   
-
-The script "DeepSignalplantPractise/lib/python_scripts/met_level_bin.py" is used for bin methylation level calculation in **Step8**.   
-The script "DeepSignalplantPractise/lib/python_scripts/chrom_met_visulization.py" is for methylation level distribution plot in **Step9**. 
-
-The scripts from DeepSignal-plant are expected to be cloned in this folder:
-```
-cd DeepSignalplantPractise/lib
-git clone https://github.com/PengNi/deepsignal-plant.git
-```
-
-You will find the script "split_freq_file_by_5mC_motif.py" under the folder "DeepSignalplantPractise/lib/deepsignal-plant/scripts", which will be used in **Step7**.
-We also use $PATHofDeepSignalPlant to indicate the path for Deepsignal-plant download in the commands. In this case, $PATHofDeepSignalPlant = "DeepSignalplantPractise/lib/deepsignal-plant/scripts".
+The users can find the step-by-step commands in the folder “workflow” which are also listed in the boxes in this protocol. The examples for intermediate and the final output were stored in “cache” and “output” folders, respectively. The “lib” folder contains python scripts used within the workflow. The users can prepare the input data in the “input” folder as the following guidance.
 
 # Input Data  
 The input data should be downloaded into different subfolders under the "DeepSignalplantPractise/input". The data we provided can be access in the our shared Google Drive folder: https://drive.google.com/drive/folders/1XCL6Ovvv9fpjg8A9prgIu2T7Ta5Yjc28
