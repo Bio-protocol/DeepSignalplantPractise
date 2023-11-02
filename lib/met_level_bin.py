@@ -28,7 +28,7 @@ def level_size(region_bed,met_bed,prefix,binsize,outdir):
     for i in region_df.itertuples():
         region_chr,region_start,region_end = i
         query_text = '(chrom == @region_chr) and (start > @region_start) and (end <= @region_end)'
-        met_df_tmp = met_df.query(query_text)
+        met_df_tmp = met_df_valid.query(query_text)
         df_cut = pd.cut(met_df_tmp['start'],bins=np.arange(region_start,region_end+binsize,binsize),right=False,precision=0)
         met_df_tmp.loc[:,'interval'] = df_cut
         #keep all bins in the region to fill gap for no methylated bins
@@ -47,11 +47,11 @@ def level_size(region_bed,met_bed,prefix,binsize,outdir):
 
 
 
-    #Keep the valid bin methylation level, while write the unvalid bin methylation level as zero
+    #Keep the valid bin methylation level, while write the unvalid bin methylation level as NA
     met_df_bin_filter =  met_df_interval_group.assign(
         met_level_final = lambda df: np.select(
             [df['size'] < 4, df['size']>= 4],
-            [0,df['met_level']]
+            [np.nan,df['met_level']]
         )
     )
 
