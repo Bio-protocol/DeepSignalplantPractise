@@ -1,0 +1,5 @@
+Data generated from Nanopore direct DNA sequencing is in FAST5 format. Sample data for Step1 can be download from the "Step1_Input" folder in Google Drive.The user can download the file "sample_data.tar.gz" to a local computer and transfer it to the folder "DeepSignalplantPractise/input/Step1_Input". The command below is used to decompress the file:
+
+tar -zxvf sample_data.tar.gz 
+
+In the decompressed “sample_data” folder, users will find four files ending in .fast5. These example files are in FAST5 format and generated from Nanopore sequencing, containing the raw electric signal that we can call the base sequence and modification. Users can refer to https://hasindu2008.github.io/slow5specs/fast5_demystified.pdf for a detailed introduction of the FAST5 format.

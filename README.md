@@ -24,72 +24,45 @@ h5ls tools we use to preview the FAST5 files would be installed automatically wi
 	* [hurry.filesize 0.9](https://pypi.org/project/hurry.filesize/)
 
 # Related scripts
-If you clone this repository to your server, you will find a folder named "DeepSignalplantPractise" as an example of the workflow:
+The pipeline we used in this protocol can be downloaded on the GitHub page: (https://github.com/Bio-protocol/DeepSignalplantPractise) with the command: 
 ```
-git clone https://github.com/LIZW2019/DeepSignalplantPractise.git
+git clone https://github.com/Bio-protocol/DeepSignalplantPractise 
 ```
-The related scripts are in the folder "DeepSignalplantPractise/lib".   
-
-The script "DeepSignalplantPractise/lib/python_scripts/met_level_bin.py" is used for bin methylation level calculation in **Step8**.   
-The script "DeepSignalplantPractise/lib/python_scripts/chrom_met_visulization.py" is for methylation level distribution plot in **Step9**. 
-
-The scripts from DeepSignal-plant are expected to be cloned in this folder:
-```
-cd DeepSignalplantPractise/lib
-git clone https://github.com/PengNi/deepsignal-plant.git
-```
-
-You will find the script "split_freq_file_by_5mC_motif.py" under the folder "DeepSignalplantPractise/lib/deepsignal-plant/scripts", which will be used in **Step7**.
-We also use $PATHofDeepSignalPlant to indicate the path for Deepsignal-plant download in the commands. In this case, $PATHofDeepSignalPlant = "DeepSignalplantPractise/lib/deepsignal-plant/scripts".
+The users can find the step-by-step commands in the folder “workflow” which are also listed in the boxes in this protocol. The examples for intermediate and the final output were stored in “cache” and “output” folders, respectively. The “lib” folder contains python scripts used within the workflow. The users can prepare the input data in the “input” folder as the following guidance.
 
 # Input Data  
-The input data should be downloaded into different subfolders under the "DeepSignalplantPractise/input". The data we provided can be access in the our shared Google Drive folder: https://drive.google.com/drive/folders/1XCL6Ovvv9fpjg8A9prgIu2T7Ta5Yjc28
 
-**a.Sequence data in FAST5 format**  
-Data generated from Nanopore direct DNA sequencing is in FAST5 format.  
-Sample data for Step1 can be download from the ["Step1_Input" folder in Google Drive](https://drive.google.com/drive/folders/1NZe6mQ5y1S8eaE-GwU124PvmONBoz5X7?usp=sharing).The user can download the file "sample_data.tar.gz" to a local computer and transfer it to the folder "DeepSignalplantPractise/input/Step1_Input". The command below is used to decompress the file:  
+**a. Nanopore data**  
+The Nanopore sequence sample data "sample_data.tar.gz" we used here was modified from the sample data provided by Deepsignal-plant13. The user can download it from ["Step1_Input" folder in Google Drive](https://drive.google.com/drive/folders/1NZe6mQ5y1S8eaE-GwU124PvmONBoz5X7?usp=sharing) to a local computer and transfer it to the folder "DeepSignalplantPractise/input/Step1_Input". The command below is used to decompress the file:
 
 ```
 tar -zxvf sample_data.tar.gz 
 ```
 
-In the decompressed “sample_data” folder, users will find four files ending in .fast5. These example files are in FAST5 format and generated from Nanopore sequencing, containing the raw electric signal that we can call the base sequence and modification. Users can refer to https://hasindu2008.github.io/slow5specs/fast5_demystified.pdf for a detailed introduction of the FAST5 format.
-
-**d.Preprocessed data**  
-In this case study, some steps would need preprocessed data as input.  
-
-In **Step3**, if you fail to get access to Guppy, you can use our basecalled fastq for the downstream analysis. Download it from the ["Step3_Input" folder in Google Drive](https://drive.google.com/drive/folders/1pk4vecjdC48gslbeXGNKforUb0jxRPpz?usp=sharing) and move it to the "DeepSignalplantPractise/input/Step3_Input".  
-
-In **Step8**, because the sample data is too small for bin calculation and visualization, we provide the preprocessed data from Pore-C as the input. Download it from the ["Step8_Input" folder in Google Drive](https://drive.google.com/drive/folders/14xw6gvQz_gjUi6p86NrSHZq59YABlzZO?usp=sharing) and move it to the "DeepSignalplantPractise/input/Step8_Input".  
-
-**b.Reference genome**  
-Download the reference genome in fasta format for mapping in Step4. Download the Genome gff file and extract the chromosome coordinates for Step8 input.
+**b. Reference genome and annotation**  
 ```
 #download reference genome
-cd ./DeepSignalplantPractise/input/
-mkdir reference
-cd reference
+cd ./DeepSignalplantPractise/input/reference
 wget -c http://ftp.ensemblgenomes.org/pub/plants/release-53/fasta/arabidopsis_thaliana/dna/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa.gz 
 gunzip Arabidopsis_thaliana.TAIR10.dna.toplevel.fa.gz
 
-#download gff file
-cd ./DeepSignalplantPractise/input/reference
+#download annotation
 wget -c http://ftp.ensemblgenomes.org/pub/plants/release-53/gff3/arabidopsis_thaliana/Arabidopsis_thaliana.TAIR10.53.gff3.gz 
 gunzip Arabidopsis_thaliana.TAIR10.53.gff3.gz
 #extract the chromosomes coordinates
 awk -F "\t" '{if($3=="chromosome") print($1"\t"$4-1"\t"$5)}' Arabidopsis_thaliana.TAIR10.53.gff3 > Tair10_genome.bed
 ```
 
-**c.Pretrained model**  
-Download [the model provided by DeepSignal-plant](https://drive.google.com/file/d/1HnDKPEfCAXgo7vPN-zaD44Kqz1SDw160/view?usp=sharing) and move it to the folder "DeepSignalplantPractise/input/model" for 5mC calling in Step5.
+**c. Pretrained model**  
+The users can download [the model provided by DeepSignal-plant](https://drive.google.com/file/d/1HnDKPEfCAXgo7vPN-zaD44Kqz1SDw160/view?usp=sharing) and move it to the folder "DeepSignalplantPractise/input/model" for 5mC calling in Step5.
 
 # Major steps  
-In this protocol, we use $PATHofDeepSignalPlant to indicate the path for Deepsignal-plant download and $CondaEnv to indicate the path of the Conda environment. Users will need to replace these two variables manually with the path they use.
+In this protocol, we use $PATHofDeepSignalPlant to indicate the path for Deepsignal-plant download and $CondaEnv to indicate the path of the Conda environment. Users will need to replace these two variables manually with the path they use. All the commands below are expected to be operated under the "DeepSignalplantPractise/workflow" folder. 
 
 **Step1. Convert the multi-read FAST5 into single-read form**  
 ```
 #01.multi_to_single_fast5.sh
-multi_to_single_fast5 -i ../input/Step1_Input/sample_data -s ../cache/SINGLE_sample_data/ -t 30 --recursive
+multi_to_single_fast5 -i ../input/Step1_Input/sample_data -s ../cache/ -t 30 --recursive
 ```
 
 **Step2. Basecall FAST5 files with Guppy**  
@@ -97,8 +70,8 @@ multi_to_single_fast5 -i ../input/Step1_Input/sample_data -s ../cache/SINGLE_sam
 ```
 #02.basecall.sh
 guppy_basecaller \
--i ../cache/SINGLE_sample_data/ \
--s ../cache/SINGLE_sample_data/fastq \
+-i ../cache/ \
+-s ../cache/fastq \
 -c dna_r9.4.1_450bps_hac_prom.cfg \
 --recursive \
 --disable_pings \
@@ -106,18 +79,19 @@ guppy_basecaller \
 --device "cuda:all:100%"
 ```
 
-**Step3. Add the basecalled sequence back to FAST5 with Tombo preprocess**  
+If the users can not access Guppy, they can download the basecalled fastq we prepared in the ["Step3_Input" folder in Google Drive](https://drive.google.com/drive/folders/1pk4vecjdC48gslbeXGNKforUb0jxRPpz?usp=sharing) for the downstream analysis.
 
+**Step3. Add the basecalled sequence back to FAST5 with Tombo preprocess**
 ```
 #03.tombo_preprocess.sh
 #environment setting, replace $CondaEnv/deepsignalpenv with your actual path
 export PATH=$CondaEnv/deepsignalpenv/bin:$PATH
 # Tombo preprocess
-cat ../cache/SINGLE_sample_data/fastq/pass/*fastq > ../cache/SINGLE_sample_data/fastq/pass.fastq
+cat ../cache/fastq/pass/*fastq > ../cache/fastq/pass.fastq
 tombo preprocess annotate_raw_with_fastqs \
---fast5-basedir ../cache/SINGLE_sample_data/ \
---fastq-filenames ../cache/SINGLE_sample_data/fastq/pass.fastq \
---sequencing-summary-filenames ../cache/SINGLE_sample_data/fastq/sequencing_summary.txt \
+--fast5-basedir ../cache/ \
+--fastq-filenames ../cache/fastq/pass.fastq \
+--sequencing-summary-filenames ../cache/fastq/sequencing_summary.txt \
 --overwrite \
 --processes 30
 ```
@@ -129,7 +103,7 @@ tombo preprocess annotate_raw_with_fastqs \
 export PATH=$CondaEnv/deepsignalpenv/bin:$PATH
 # resquiggler
 tombo resquiggle \
-../cache/SINGLE_sample_data/ \
+../cache/ \
 ../input/reference/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa \
 --processes 30 \
 --corrected-group RawGenomeCorrected_000 \
@@ -145,9 +119,9 @@ tombo resquiggle \
 export PATH=$CondaEnv/deepsignalpenv/bin:$PATH
 #call 5mC
 CUDA_VISIBLE_DEVICES=0,1 deepsignal_plant call_mods \
---input_path ../cache/SINGLE_sample_data \
+--input_path ../cache \
 --model_path ../input/model/model.dp2.CNN.arabnrice2-1_120m_R9.4plus_tem.bn13_sn16.both_bilstm.epoch6.ckpt \
---result_file ../cache/SINGLE_sample_data/fast5s.C.call_mods.tsv \
+--result_file ../cache/fast5s.C.call_mods.tsv \
 --corrected_group RawGenomeCorrected_000 \
 --reference_path ../input/reference/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa \
 --motifs C --nproc 30 --nproc_gpu 2
@@ -160,8 +134,8 @@ CUDA_VISIBLE_DEVICES=0,1 deepsignal_plant call_mods \
 export PATH=$CondaEnv/deepsignalpenv/bin:$PATH
 #calculate frequency
 deepsignal_plant call_freq \
---input_path ../cache/SINGLE_sample_data/fast5s.C.call_mods.tsv \
---result_file ../cache/SINGLE_sample_data/fast5s.C.call_mods.freq.bed \
+--input_path ../cache/fast5s.C.call_mods.tsv \
+--result_file ../cache/fast5s.C.call_mods.freq.bed \
 --sort --bed
 ```
 
@@ -170,17 +144,19 @@ deepsignal_plant call_freq \
 #07.split_context.sh
 #replace $PATHofDeepSignalPlant with your actual path
 python $PATHofDeepSignalPlant/scripts/split_freq_file_by_5mC_motif.py \
---freqfile ../cache/SINGLE_sample_data/fast5s.C.call_mods.freq.bed \
+--freqfile ../cache/fast5s.C.call_mods.freq.bed \
 --ref ../input/reference/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa
 ```
 
 **Step8. Calculate the weighted methylation level in the bin**  
 
+Because the sample data is too small for bin calculation and visualization, we provide the preprocessed data from Pore-C as the input. Download it from the ["Step8_Input" folder in Google Drive](https://drive.google.com/drive/folders/14xw6gvQz_gjUi6p86NrSHZq59YABlzZO?usp=sharing) and move it to the "DeepSignalplantPractise/input/Step8_Input".  
+
 ```
 #08.met_level_bin.sh
-python ../lib/python_scripts/met_level_bin.py \
+python ../lib/met_level_bin.py \
 --region_bed ../input/reference/Tair10_genome.bed \
---met_bed ../input/Step8_Input/porec_rep2/forstep08/Rep2_fast5s.C.call_mods.CG.frequency.bed \
+--met_bed ../input/Step8_Input/Rep2_fast5s.C.call_mods.CG.frequency.bed \
 --prefix Rep2_fast5s.C.call_mods.CG \
 --binsize 100000 \
 --outdir ../output
@@ -190,7 +166,7 @@ python ../lib/python_scripts/met_level_bin.py \
 
 ```
 #09.chrom_met_visulization.sh
-python ../lib/python_scripts/chrom_met_visulization.py \
+python ../lib/chrom_met_visulization.py \
 --cg_bedg ../output/Rep2_fast5s.C.call_mods.CG_binsize100000.bedgraph \
 --chg_bedg ../output/Rep2_fast5s.C.call_mods.CHG_binsize100000.bedgraph \
 --chh_bedg ../output/Rep2_fast5s.C.call_mods.CHH_binsize100000.bedgraph \
@@ -199,7 +175,7 @@ python ../lib/python_scripts/chrom_met_visulization.py \
 ```
 
 # Expected results  
-**The intermediate results and the final results of this workflow is large, so we keep only part of the files as examples under the folder "cache" and "output" respectively, with the name marked with "EXAMPLE".** The results can be visualized as follow:
+The intermediate results and the final results of this workflow is large, so we **keep only part of the files as examples** under the folder "cache" and "output" respectively, with the name marked with **"EXAMPLE".** The results can be visualized as follow:
 
 * IGV 
 ![](./graphs/IGV.png)
