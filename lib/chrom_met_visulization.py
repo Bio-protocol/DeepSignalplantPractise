@@ -51,11 +51,12 @@ def plot_met_chr(cg_bedg,chg_bedg,chh_bedg,region_bed,chrom,outdir):
     n = 0
     for i in [CG_table,CHG_table,CHH_table]:
         df = i.query('chrom == @chrom')
+        color_sub  = color_list[n]
         if df['met_level_final'].isnull().sum() > 0:
             sns.lineplot(data=df,x='binstart',y='met_level_final',
             hue=df["met_level_final"].isna().cumsum(),
-            palette=[color_list[n]]*sum(df["met_level_final"].isna()),
-            lw=4,ax=ax)
+            palette=[color_sub]*(sum(df["met_level_final"].isna())+1),
+            legend=False, markers=True,lw=4,ax=ax)
         else:
             sns.lineplot(data=df,x='binstart',y='met_level_final',color=color_list[n],lw=4,ax=ax)
 
