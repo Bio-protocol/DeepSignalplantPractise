@@ -1,5 +1,5 @@
 #04.tombo_resquiggle.sh
-#environment setting, replace $CondaEnv/deepsignalpenv with your actual path
+#environment setting, replace $MambaEnv/deepsignalpenv with your actual path
 export PATH=$MambaEnv/deepsignalpenv/bin:$PATH
 # resquiggler
 tombo resquiggle \
