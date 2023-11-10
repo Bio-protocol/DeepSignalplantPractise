@@ -3,7 +3,7 @@
 export PATH=$CondaEnv/deepsignalpenv/bin:$PATH
 # resquiggler
 tombo resquiggle \
-../cache/ \
+../cache/SINGLE_sample_data \
 ../input/reference/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa \
 --processes 30 \
 --corrected-group RawGenomeCorrected_000 \
