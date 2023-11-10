@@ -1,6 +1,6 @@
 #03.tombo_preprocess.sh
-#environment setting, replace $CondaEnv/deepsignalpenv with your actual path
-export PATH=$CondaEnv/deepsignalpenv/bin:$PATH
+#environment setting, replace $MambaEnv/deepsignalpenv with your actual path
+export PATH=$MambaEnv/deepsignalpenv/bin:$PATH
 # Tombo preprocess
 cat ../cache/fastq/pass/*fastq > ../cache/fastq/pass.fastq
 tombo preprocess annotate_raw_with_fastqs \
